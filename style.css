@@ -6,16 +6,52 @@
 
 html {
   height: 100vh;
-  overflow: hidden scroll;
+  overflow: hidden;
 }
 
 body {
-  color: #777;
+  color: #444;
   background-color: #fff;
   font-size: 16px;
+  font-family: Quicksand, serif;
 }
 
 a {
   text-decoration: none;
   color: inherit;
+}
+
+.hidden {
+  display: none;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 12vh;
+}
+
+h1 {
+  font-weight: 300;
+  padding: 10px 20px;
+  margin-left: 10px;
+}
+
+nav ul {
+  list-style-type: none;
+  display: flex;
+  margin-right: 20px;
+}
+
+nav li {
+  padding: 10px 20px;
+  border-bottom: #fff solid 1px;
+}
+
+nav li:hover,
+nav li:focus {
+  border-bottom: #444 solid 1px;
+  transition: 400ms;
+  cursor: pointer;
 }
