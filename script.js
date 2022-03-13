@@ -1,46 +1,48 @@
-function geodesic(z1) {
-  const r = 100; // dynamic
-  let phi = 0;
-  let x = [[], [], []];
-  const theta = 0.4*Math.PI;
-  while (phi < 2*Math.PI) {
-    x[0].push(r*Math.cos(phi));
-    x[1].push(r*Math.sin(phi)*Math.cos(theta) - z1*Math.sin(theta));
-    x[2].push(r*Math.sin(phi)*Math.sin(theta) + z1*Math.cos(theta));
-    phi += 0.01;
-  }
-  return x;
-}
-
-function projection(x) {
-  const o = [canvas.width/2, canvas.height/2];
-  let y = [[], []];
-  i = 0;
-  while (i < x[0].length) {
-    y[0].push(o[0] + 300*x[0][i]/(120-x[2][i]));
-    y[1].push(o[1]/2 + 200*x[1][i]/(120-x[2][i]));
-    i++;
-  };
-  return y;
-}
-
-function plot(c, x) {
-  c.beginPath();
-  for (i=1; i < x[0].length; i++) {
-    c.moveTo(x[0][i-1], x[1][i-1]);
-    c.lineTo(x[0][i], x[1][i]);
-  }
-  c.lineWidth = 0.2;
-  c.strokeStyle = '#777';
-  c.stroke();
-}
-
 const canvas = document.getElementById('anim');
 canvas.width = window.innerWidth;
 canvas.height = 0.8*window.innerHeight;
 if (canvas.getContext('2d')) {
-  const c = canvas.getContext('2d');
-  [15, 5, -5, -15].forEach(z => plot(c, projection(geodesic(z))));
+  const ctx = canvas.getContext('2d');
+
+  // geodesics
+  const r1 = 0.25*Math.max(canvas.width, canvas.height);
+  [1,3].forEach(r2 => {
+    r2 *= 0.06*r1;
+    let phi = 0;
+    let theta = 0;
+    let q = [];
+    let x, y, z;
+    while (phi <= 4*Math.PI) {
+      theta = 0.5*phi;
+      // curve on the 2-torus
+      x = (r1 + r2*Math.sin(theta))*Math.cos(phi);
+      y = (r1 + r2*Math.sin(theta))*Math.sin(phi);
+      z = r2*Math.cos(theta);
+      // rotate about x-axis for orientation ?
+      q.push([x, y, z]);
+      phi += 0.01*Math.PI;
+    }
+    // projection
+    const o = [0.5*canvas.width, 0.5*canvas.height];
+    let p = [];
+    let a, b;
+    let i = 0;
+    while (i < q.length) {
+      a = o[0] + 0.8*r1*q[i][0]/(r1-q[i][2]);
+      b = o[1] + 0.5*r1*q[i][1]/(r1-q[i][2]);
+      p.push([a, b]);
+      i++;
+    };
+    // animation
+    ctx.beginPath();
+    for (i=1; i < p.length; i++) {
+      ctx.moveTo(p[i-1][0], p[i-1][1]);
+      ctx.lineTo(p[i][0], p[i][1]);
+    }
+    ctx.lineWidth = 0.2;
+    ctx.strokeStyle = '#444';
+    ctx.stroke();
+  });
 
 } else {
 
