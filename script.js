@@ -1,49 +1,38 @@
 const canvas = document.getElementById('anim');
 canvas.width = window.innerWidth;
 canvas.height = 0.8*window.innerHeight;
-if (canvas.getContext('2d')) {
-  const ctx = canvas.getContext('2d');
+const ctx = canvas.getContext('2d');
 
-  // geodesics
-  const r1 = 0.25*Math.max(canvas.width, canvas.height);
-  [1,3].forEach(r2 => {
-    r2 *= 0.06*r1;
-    let phi = 0;
-    let theta = 0;
+const r1 = 0.25*Math.max(canvas.width, canvas.height);
+const inf = 0.01*Math.PI;
+let t0 = 0;
+setInterval(() => {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  Array(12).fill().map((_, i) => 2*i+1).forEach(r2 => {
+    r2 *= 0.01*r1;
     let q = [];
-    let x, y, z;
-    while (phi <= 4*Math.PI) {
-      theta = 0.5*phi;
-      // curve on the 2-torus
-      x = (r1 + r2*Math.sin(theta))*Math.cos(phi);
-      y = (r1 + r2*Math.sin(theta))*Math.sin(phi);
-      z = r2*Math.cos(theta);
-      // rotate about x-axis for orientation ?
-      q.push([x, y, z]);
-      phi += 0.01*Math.PI;
-    }
-    // projection
+    Array(401).fill().map((_, e) => 0.01*e*Math.PI).forEach(i => {
+      [theta, phi] = [t0+0.5*i, i];
+      q.push([
+        (r1 - r2*Math.sin(theta))*Math.cos(phi),
+        -(r1 - r2*Math.sin(theta))*Math.sin(phi),
+        r2*Math.cos(theta)
+      ]);
+    });
     const o = [0.5*canvas.width, 0.5*canvas.height];
-    let p = [];
-    let a, b;
-    let i = 0;
-    while (i < q.length) {
-      a = o[0] + 0.8*r1*q[i][0]/(r1-q[i][2]);
-      b = o[1] + 0.5*r1*q[i][1]/(r1-q[i][2]);
-      p.push([a, b]);
-      i++;
-    };
-    // animation
+    const scale = [0.75, 0.5];
+    let p = q.map(q_ => [
+      o[0] + scale[0]*r1*q_[0]/(r1-q_[2]),
+      o[1] + scale[1]*r1*q_[1]/(r1-q_[2])
+    ]);
     ctx.beginPath();
-    for (i=1; i < p.length; i++) {
+    for (let i=1; i < p.length; i+=2) {
       ctx.moveTo(p[i-1][0], p[i-1][1]);
       ctx.lineTo(p[i][0], p[i][1]);
     }
-    ctx.lineWidth = 0.2;
-    ctx.strokeStyle = '#444';
+    ctx.lineWidth = 0.4;
+    ctx.strokeStyle = '#007070';
     ctx.stroke();
   });
-
-} else {
-
-}
+  t0 += 0.5*inf;
+}, 16.67);
