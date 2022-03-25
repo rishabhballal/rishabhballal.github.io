@@ -37,39 +37,38 @@ setInterval(() => {
 }, 16.67);
 
 
-let state = 'main';
-history.replaceState({'page': state}, '', '');
 
-function transition(state1, state2) {
-  let opacity = 100;
-  const speed = 10;
-  const int1 = setInterval(() => {
-    opacity -= speed;
-    state1.style.opacity = opacity*0.01;
-    if (opacity <= 0) {
-      state1.classList.add('hidden');
-      clearInterval(int1);
-      state2.style.opacity = opacity;
-      state2.classList.remove('hidden');
-      const int2 = setInterval(() => {
-        opacity += speed;
-        state2.style.opacity = opacity*0.01;
-        if (opacity >= 100) clearInterval(int2);
-      }, 16.67)
-    }
-  }, 16.67)
-  state = state2.id;
+let state = 'main';
+const views = ['geometry', 'physics'];
+
+function renderState(id) {
+  if (views.includes(window.location.hash.slice(1))) {
+    document.getElementById(state).classList.add('hidden');
+    document.getElementById(id).classList.remove('hidden');
+    state = id;
+  } else {
+    window.location.replace('/');
+  }
+}
+
+if (window.location.hash) {
+  renderState(window.location.hash.slice(1));
 }
 
 document.querySelectorAll('nav .btn').forEach(btn =>
   btn.addEventListener('click', e => {
-    transition(document.getElementById('main'),
-      document.getElementById(btn.value));
-    history.pushState({'page': btn.value}, '', '');
+    window.location.hash = btn.value;
   })
 );
 
-window.addEventListener('popstate', event => {
-  if (event.state.page) transition(document.getElementById(state),
-    document.getElementById(event.state.page));
+window.addEventListener('hashchange', () => {
+  renderState(window.location.hash.slice(1));
+});
+
+window.addEventListener('popstate', () => {
+  if (window.location.hash) {
+    renderState(window.location.hash.slice(1));
+  } else {
+    window.location.replace('/');
+  }
 });
