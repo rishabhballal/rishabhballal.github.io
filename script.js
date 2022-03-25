@@ -1,7 +1,10 @@
-const canvas = document.getElementById('moebius');
+document.querySelectorAll('canvas').forEach(c => {
+  c.width = 0.6*window.innerWidth;
+  c.height = window.innerHeight;
+})
+
+const canvas = document.getElementById('moebius1');
 const ctx = canvas.getContext('2d');
-canvas.width = 0.6*window.innerWidth; // 0.5;
-canvas.height = window.innerHeight;
 const r1 = 0.25*canvas.width;
 let t0 = 0;
 setInterval(() => {
@@ -32,3 +35,41 @@ setInterval(() => {
   });
   t0 = t0%(2*Math.PI) + 0.005*Math.PI;
 }, 16.67);
+
+
+let state = 'main';
+history.replaceState({'page': state}, '', '');
+
+function transition(state1, state2) {
+  let opacity = 100;
+  const speed = 10;
+  const int1 = setInterval(() => {
+    opacity -= speed;
+    state1.style.opacity = opacity*0.01;
+    if (opacity <= 0) {
+      state1.classList.add('hidden');
+      clearInterval(int1);
+      state2.style.opacity = opacity;
+      state2.classList.remove('hidden');
+      const int2 = setInterval(() => {
+        opacity += speed;
+        state2.style.opacity = opacity*0.01;
+        if (opacity >= 100) clearInterval(int2);
+      }, 16.67)
+    }
+  }, 16.67)
+  state = state2.id;
+}
+
+document.querySelectorAll('nav .btn').forEach(btn =>
+  btn.addEventListener('click', e => {
+    transition(document.getElementById('main'),
+      document.getElementById(btn.value));
+    history.pushState({'page': btn.value}, '', '');
+  })
+);
+
+window.addEventListener('popstate', event => {
+  if (event.state.page) transition(document.getElementById(state),
+    document.getElementById(event.state.page));
+});
