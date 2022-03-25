@@ -11,18 +11,84 @@
     <script defer src='script.js' type='text/javascript'></script>
   </head>
   <body>
-    <div class='row'>
-      <canvas id='moebius'></canvas>
-      <section class='text'>
-        <h1>Rishabh Ballal</h1>
-        <p>
-          I am a student of Mathematical Physics at Universität Leipzig, specialising in differential geometry and its applications in quantum theory. This site is my personal platform for the geometric structures that I code, and the notes that I compile as I study physics.
-        </p><br>
-        <p>
-          <span class='btn'>Geometry models</span>
-          <span class='btn'>Physics notes</span>
-        </p>
-      </section>
-    </div>
+    <main>
+      <div id='main'>
+        <section>
+          <article class='left'>
+            <h1>Rishabh Ballal</h1>
+            <p>
+              I am a student of Mathematical Physics at Universität Leipzig, specialising in differential geometry and its applications in quantum theory. This site is a platform for the geometric structures that I code, and the notes that I compile as I study physics.
+            </p>
+            <nav>
+              <button type='button' class='btn' value='geometry'>Geometry models</button>
+              <button type='button' class='btn' value='physics'>Physics notes</button>
+            </nav>
+          </article>
+          <canvas id='moebius1'></canvas>
+        </section>
+      </div>
+
+      <div id='geometry' class='hidden'>
+        <section class='row'>
+          <article class='left'>
+            <h2>The Sphere</h2>
+            <p></p>
+          </article>
+          <canvas id='sphere'></canvas>
+        </section>
+        <section class='row'>
+          <canvas id='hyperboloid'></canvas>
+          <article class='right'>
+            <h2>The Hyperboloid</h2>
+            <p></p>
+          </article>
+        </section>
+        <section class='row'>
+          <article class='left'>
+            <h2>The Torus</h2>
+            <p></p>
+          </article>
+          <canvas id='torus'></canvas>
+        </section>
+        <section class='row'>
+          <canvas id='moebius2'></canvas>
+          <article class='right'>
+            <h2>The Möbius Strip</h2>
+            <p></p>
+          </article>
+        </section>
+      </div>
+
+      <div id='physics' class='hidden'>
+        <section class='row'>
+          <article class='left'>
+            <h2>Classical Mechanics</h2>
+            <p></p>
+          </article>
+          <canvas id='sphere'></canvas>
+        </section>
+        <section class='row'>
+          <canvas id='hyperboloid'></canvas>
+          <article class='right'>
+            <h2>Electrodynamics</h2>
+            <p></p>
+          </article>
+        </section>
+        <section class='row'>
+          <article class='left'>
+            <h2>Special Relativity</h2>
+            <p></p>
+          </article>
+          <canvas id='torus'></canvas>
+        </section>
+        <section class='row'>
+          <canvas id='moebius2'></canvas>
+          <article class='right'>
+            <h2>General Relativity</h2>
+            <p></p>
+          </article>
+        </section>
+      </div>
+    </main>
   </body>
 </html>
