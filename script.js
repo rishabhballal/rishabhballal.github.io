@@ -35,124 +35,122 @@ window.addEventListener('popstate', () => {
 
 
 
-const width = 0.6*window.innerWidth;
-const height = 1.0*window.innerHeight;
-document.querySelectorAll('canvas').forEach(c => {
-  c.width = width;
-  c.height = height;
-})
 
 function range(start, end, step) {
   const len = Math.floor((end+step-start)/step);
   return Array(len).fill().map((_, e) => start+e*step)
 }
 
-function stereographic_projection(q, ctx) {
-  const d = Math.max(width, height);
-  let p = q.map(q_ => [
-    0.5*width + d*q_[0]/(d-q_[2]),
-    0.5*height + d*q_[1]/(d-q_[2])
-  ]);
-  ctx.beginPath();
-  for (let i=1; i < p.length; i+=2) {
-    ctx.moveTo(p[i-1][0], p[i-1][1]);
-    ctx.lineTo(p[i][0], p[i][1]);
+class Manifold {
+  constructor(id) {
+    this.canvas = document.getElementById(id);
+    this.canvas.width = 0.6*window.innerWidth;
+    this.canvas.height = 1.0*window.innerHeight;
+    this.ctx = this.canvas.getContext('2d');
+    this.ctx.translate(0, this.canvas.height);
+    this.ctx.scale(1, -1);
+    this.r = 0.25*this.canvas.width;
+    this.t = 0;
+    this.cam = Math.max(this.canvas.width, this.canvas.height);
   }
-  ctx.lineWidth = 0.4;
-  ctx.strokeStyle = '#007070';
-  ctx.stroke();
+
+  project(s) {
+    this.p = this.q.map(q_ => [
+      0.5*this.canvas.width + s[0]*this.cam*q_[0]/(this.cam-q_[2]),
+      0.5*this.canvas.height + s[1]*this.cam*q_[1]/(this.cam-q_[2])
+    ]);
+    this.ctx.beginPath();
+    for (let i=1; i < this.p.length; i+=2) {
+      this.ctx.moveTo(this.p[i-1][0], this.p[i-1][1]);
+      this.ctx.lineTo(this.p[i][0], this.p[i][1]);
+    }
+    this.ctx.lineWidth = 0.4;
+    this.ctx.strokeStyle = '#007070';
+    this.ctx.stroke();
+  }
 }
 
 // moebius
-Array.from(['moebius1', 'moebius2']).forEach(moebius_ => {
-  const moebius = document.getElementById(moebius_);
-  const moebius_ctx = moebius.getContext('2d');
-  const r1a = 0.25*width;
-  let t1 = 0;
+['moebius1', 'moebius2'].forEach(moebius_ => {
+  const moebius = new Manifold(moebius_);
   setInterval(() => {
-    moebius_ctx.clearRect(0, 0, width, height);
-    range(1, 25, 2).forEach(r1b => {
-      r1b *= 0.01*r1a;
-      let q = [];
+    moebius.ctx.clearRect(
+      0, 0, moebius.canvas.width, moebius.canvas.height
+    );
+    range(1, 25, 2).forEach(r_ => {
+      r_ *= 0.01*moebius.r;
+      moebius.q = [];
       range(0, 4*Math.PI, 0.01*Math.PI).forEach(phi => {
-        const theta = t1+0.5*phi;
-        q.push([
-          1.2*(r1a - r1b*Math.sin(theta))*Math.cos(phi),
-          -0.8*(r1a - r1b*Math.sin(theta))*Math.sin(phi),
-          r1b*Math.cos(theta)
+        const theta = moebius.t+0.5*phi;
+        moebius.q.push([
+          (moebius.r + r_*Math.sin(theta))*Math.cos(phi),
+          (moebius.r + r_*Math.sin(theta))*Math.sin(phi),
+          r_*Math.cos(theta)
         ]);
       });
-      stereographic_projection(q, moebius_ctx);
+      moebius.project([1.2, 0.8]);
     });
-    t1 = t1%(2*Math.PI) + 0.005*Math.PI;
+    moebius.t = moebius.t%(2*Math.PI) + 0.005*Math.PI;
   }, 16.67);
 });
 
 // sphere
-const sphere = document.getElementById('sphere');
-const sphere_ctx = sphere.getContext('2d');
-const r2 = 0.25*width;
-let t2 = 0;
+const sphere = new Manifold('sphere');
 setInterval(() => {
-  sphere_ctx.clearRect(0, 0, width, height);
-  range(0.01*Math.PI, 0.99*Math.PI, 0.01*Math.PI).forEach(theta => {
-    let q = [];
+  sphere.ctx.clearRect(0, 0, sphere.canvas.width, sphere.canvas.height);
+  range(0.01*Math.PI, 0.99*Math.PI, 0.02*Math.PI).forEach(theta => {
+    sphere.q = [];
     range(0, 2*Math.PI, 0.01*Math.PI).forEach(phi => {
-      q.push([
-        r2*Math.sin(theta)*Math.sin(t2+phi),
-        r2*Math.cos(theta),
-        r2*Math.sin(theta)*Math.cos(t2+phi)
+      sphere.q.push([
+        sphere.r*Math.sin(theta)*Math.sin(sphere.t+phi),
+        sphere.r*Math.cos(theta),
+        sphere.r*Math.sin(theta)*Math.cos(sphere.t+phi)
       ])
     });
-    stereographic_projection(q, sphere_ctx);
+    sphere.project([1.2, 1.2]);
   });
-  t2 = t2%(2*Math.PI) + 0.001*Math.PI;
+  sphere.t = sphere.t%(2*Math.PI) + 0.001*Math.PI;
 }, 16.67);
 
 // hyperboloid
-const hyper = document.getElementById('hyperboloid');
-const hyper_ctx = hyper.getContext('2d');
-const r3 = 0.1*width;
-let t3 = 0;
+const hyper = new Manifold('hyperboloid');
+hyper.r *= 0.5;
 setInterval(() => {
-  hyper_ctx.clearRect(0, 0, width, height);
-  range(-200, 200, 4).forEach(z => {
-    let q = [];
+  hyper.ctx.clearRect(0, 0, hyper.canvas.width, hyper.canvas.height);
+  range(-200, 200, 5).forEach(y => {
+    hyper.q = [];
     range(0, 2*Math.PI, 0.01*Math.PI).forEach(phi => {
-      q.push([
-        Math.sqrt(z**2 + r3**2)*Math.cos(t3+phi),
-        z,
-        Math.sqrt(z**2 + r3**2)*Math.sin(t3+phi)
+      hyper.q.push([
+        Math.sqrt(y**2 + hyper.r**2)*Math.cos(hyper.t+phi),
+        y,
+        Math.sqrt(y**2 + hyper.r**2)*Math.sin(hyper.t+phi)
       ])
     });
-    stereographic_projection(q, hyper_ctx);
+    hyper.project([1.2, 1.2]);
   });
-  t3 = t3%(2*Math.PI) + 0.001*Math.PI;
+  hyper.t = hyper.t%(2*Math.PI) + 0.001*Math.PI;
 }, 16.67);
 
 // torus
-const torus = document.getElementById('torus');
-const torus_ctx = torus.getContext('2d');
-const r4a = 0.25*width;
-const r4b = 0.3*r4a;
-let t4 = 0;
-// setInterval(() => {
-//   torus_ctx.clearRect(0, 0, width, height);
-//   range(0, 2*Math.PI, 0.01*Math.PI).forEach(phi => {
-//     let q = [];
-//     range(0, 2*Math.PI, 0.02*Math.PI).forEach(theta => {
-//       [x, z] = [
-//         (r4a + r4b*Math.sin(theta))*Math.sin(t4+phi),
-//         r4b*Math.cos(theta),
-//       ];
-//       const rot = 0.3*Math.PI;
-//       q.push([
-//         (r4a + r4b*Math.sin(theta))*Math.cos(t4+phi),
-//         x*Math.cos(rot) - z*Math.sin(rot),
-//         x*Math.sin(rot) + z*Math.cos(rot),
-//       ])
-//     });
-//     stereographic_projection(q, torus_ctx);
-//   });
-//   t4 = t4%(2*Math.PI) + 0.001*Math.PI;
-// }, 16.67);
+const torus = new Manifold('torus');
+torus.r = [torus.r, 0.3*torus.r];
+setInterval(() => {
+  torus.ctx.clearRect(0, 0, torus.canvas.width, torus.canvas.height);
+  range(0, 2*Math.PI, 0.01*Math.PI).forEach(phi => {
+    torus.q = [];
+    range(0, 2*Math.PI, 0.02*Math.PI).forEach(theta => {
+      [y, z] = [
+        (torus.r[0] + torus.r[1]*Math.sin(theta))*Math.sin(torus.t+phi),
+        torus.r[1]*Math.cos(theta)
+      ];
+      const rot = 0.25*Math.PI;
+      torus.q.push([
+        (torus.r[0] + torus.r[1]*Math.sin(theta))*Math.cos(torus.t+phi),
+        y*Math.cos(rot) + z*Math.sin(rot),
+        -y*Math.sin(rot) + z*Math.cos(rot)
+      ])
+    });
+    torus.project([1.2, 1.2]);
+  });
+  torus.t = torus.t%(2*Math.PI) + 0.001*Math.PI;
+}, 16.67);
