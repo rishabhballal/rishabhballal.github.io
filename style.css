@@ -27,12 +27,13 @@ h2 {
 a {
   text-decoration: none;
   color: inherit;
+  border-bottom: #444 solid 1px;
 }
 
 .stretch {
   display: flex;
+  align-items: center;
   width: 100vw;
-  height: 100vh;
 }
 
 .centre {
@@ -76,7 +77,6 @@ nav {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 25vh;
 }
 
 nav ul {
@@ -88,8 +88,9 @@ nav ul {
 
 nav .btn {
   width: 100%;
-  border: #fff solid 1px;
+  border: #f7f7f7 solid 1px;
   border-bottom: #ccc solid 1px;
+  background-color: #f7f7f7;
 }
 
 nav #active {
@@ -97,6 +98,7 @@ nav #active {
   border-bottom: #fff solid 1px;
   transition: 0ms;
   cursor: default;
+  background-color: #fff;
 }
 
 .hidden {

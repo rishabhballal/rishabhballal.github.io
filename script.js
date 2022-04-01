@@ -50,10 +50,10 @@ function range(start, end, step) {
 }
 
 class Manifold {
-  constructor(id) {
+  constructor(id, w, h) {
     this.canvas = document.getElementById(`canvas-${id}`);
-    this.canvas.width = 0.6*window.innerWidth;
-    this.canvas.height = 1.0*window.innerHeight;
+    this.canvas.width = w ? w*window.innerWidth : 0.5*window.innerWidth;
+    this.canvas.height = h ? h*window.innerHeight : 0.8*window.innerHeight;
     this.ctx = this.canvas.getContext('2d');
     this.ctx.translate(0, this.canvas.height);
     this.ctx.scale(1, -1);
@@ -79,7 +79,7 @@ class Manifold {
 }
 
 // moebius1
-const moebius1 = new Manifold('moebius1');
+const moebius1 = new Manifold('moebius1', 0.6, 0.95);
 setInterval(() => {
   moebius1.ctx.clearRect(
     0, 0, moebius1.canvas.width, moebius1.canvas.height
@@ -87,7 +87,7 @@ setInterval(() => {
   range(1, 25, 2).forEach(r_ => {
     r_ *= 0.01*moebius1.r;
     moebius1.q = [];
-    range(0, 4.01*Math.PI, 0.01*Math.PI).forEach(phi => {
+    range(0, 4*Math.PI, 0.01*Math.PI).forEach(phi => {
       const theta = moebius1.t+0.5*phi;
       moebius1.q.push([
         1.2*(moebius1.r + r_*Math.sin(theta))*Math.cos(phi),
@@ -106,7 +106,7 @@ setInterval(() => {
   sphere.ctx.clearRect(0, 0, sphere.canvas.width, sphere.canvas.height);
   range(0.01*Math.PI, 0.99*Math.PI, 0.02*Math.PI).forEach(theta => {
     sphere.q = [];
-    range(0, 2.01*Math.PI, 0.01*Math.PI).forEach(phi => {
+    range(0, 2*Math.PI, 0.01*Math.PI).forEach(phi => {
       sphere.q.push([
         sphere.r*Math.sin(theta)*Math.sin(sphere.t+phi),
         sphere.r*Math.cos(theta),
@@ -120,12 +120,12 @@ setInterval(() => {
 
 // hyperboloid
 const hyper = new Manifold('hyperboloid');
-hyper.r *= 0.4;
+hyper.r *= 0.25;
 setInterval(() => {
   hyper.ctx.clearRect(0, 0, hyper.canvas.width, hyper.canvas.height);
-  range(-200, 200, 5).forEach(y => {
+  range(-160, 160, 5).forEach(y => {
     hyper.q = [];
-    range(0, 2.01*Math.PI, 0.01*Math.PI).forEach(phi => {
+    range(0, 2*Math.PI, 0.01*Math.PI).forEach(phi => {
       hyper.q.push([
         Math.sqrt(y**2 + hyper.r**2)*Math.cos(hyper.t+phi),
         y,
