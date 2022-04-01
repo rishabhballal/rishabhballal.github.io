@@ -4,16 +4,17 @@ function range(start, end, step) {
 }
 
 class Manifold {
-  constructor(id, w=0.5, h=0.8) {
+  constructor(id, dim=[0.5, 0.8], display=false) {
     this.canvas = document.getElementById(`canvas-${id}`);
-    this.canvas.width = w*window.innerWidth;
-    this.canvas.height = h*window.innerHeight;
+    this.canvas.width = dim[0]*window.innerWidth;
+    this.canvas.height = dim[1]*window.innerHeight;
     this.ctx = this.canvas.getContext('2d');
     this.ctx.translate(0, this.canvas.height);
     this.ctx.scale(1, -1);
     this.r = 0.25*this.canvas.width;
     this.t = 0;
     this.cam = Math.max(this.canvas.width, this.canvas.height);
+    this.display = display;
   }
 
   project() {
@@ -34,9 +35,11 @@ class Manifold {
   animate(eqn, inc) {
     setInterval(() => {
       this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-      eqn(this);
-      this.t = this.t%(2*Math.PI) + inc*Math.PI;
-    }, 16.67);
+      if (this.display) {
+        eqn(this);
+        this.t = this.t%(2*Math.PI) + inc*Math.PI;
+      }
+    }, 25);
   }
 }
 
@@ -69,7 +72,6 @@ function sphereEqn(obj) {
     obj.project();
   });
 }
-
 
 function hyperEqn(obj) {
   range(-160, 160, 5).forEach(y => {
@@ -104,33 +106,22 @@ function torusEqn(obj) {
   });
 }
 
-const moebius1 = new Manifold('moebius1', 0.6, 0.95);
+const moebius1 = new Manifold('moebius1', [0.6, 0.95], true);
+moebius1.animate(moebiusEqn, 0.008);
+
 const sphere = new Manifold('sphere');
+sphere.animate(sphereEqn, 0.002);
+
 const hyper = new Manifold('hyperboloid');
 hyper.r *= 0.3;
+hyper.animate(hyperEqn, 0.002);
+
 const torus = new Manifold('torus');
 torus.r = [torus.r, 0.3*torus.r];
+torus.animate(torusEqn, 0.002);
+
 const moebius2 = new Manifold('moebius2');
-
-moebius1.animate(moebiusEqn, 0.005);
-sphere.animate(sphereEqn, 0.001);
-hyper.animate(hyperEqn, 0.001);
-torus.animate(torusEqn, 0.001);
-moebius2.animate(moebiusEqn, 0.005);
-
-let active = 'sphere';
-const nav = document.querySelectorAll('nav button');
-nav.forEach(btn => {
-  btn.addEventListener('click', e => {
-    if (event.target.value != active) {
-      Array.from(nav).find(i => i.value == active).id = '';
-      document.getElementById(active).classList.add('hidden');
-      e.target.id = 'active';
-      document.getElementById(e.target.value).classList.remove('hidden');
-      active = e.target.value;
-    }
-  });
-});
+moebius2.animate(moebiusEqn, 0.008);
 
 let page = 'main';
 const views = Array.from(document.querySelectorAll('.page'))
@@ -140,9 +131,36 @@ function renderPage(id) {
   if (views.includes(window.location.hash.slice(1))) {
     document.getElementById(page).classList.add('hidden');
     document.getElementById(id).classList.remove('hidden');
+    if (page == 'main') moebius1.display = false;
     page = id;
-    document.title = `${id[0].toUpperCase()}${id.slice(1)} \
-      - ${document.title}`;
+    // document.title
+
+    switch (page) {
+      case 'geometry':
+      let active = 'sphere';
+      sphere.display = true;
+      const nav = document.querySelectorAll('nav button');
+      nav.forEach(btn => {
+        btn.addEventListener('click', e => {
+          if (event.target.value != active) {
+            Array.from(nav).find(i => i.value == active).id = '';
+            e.target.id = 'active';
+            document.getElementById(active).classList.add('hidden');
+            document.getElementById(e.target.value).classList.remove('hidden');
+            // create array of Manifold instances
+            [sphere, hyper, torus, moebius2]
+              .find(c => c.canvas.id == `canvas-${active}`).display = false;
+            [sphere, hyper, torus, moebius2]
+              .find(c => c.canvas.id == `canvas-${e.target.value}`).display = true;
+            active = e.target.value;
+          }
+        });
+      });
+      break;
+      case 'geometry-code':
+
+      break;
+    }
   } else {
     window.location.replace('/');
   }
