@@ -12,82 +12,79 @@
   </head>
   <body>
     <main>
-      <div id='main'>
-        <section>
-          <article class='left'>
-            <h1>Rishabh Ballal</h1>
-            <p>
-              I am a student of Mathematical Physics at Universität Leipzig, specialising in differential geometry and its applications in quantum theory. This site is a platform for the geometric structures that I code, and the notes that I compile as I study physics.
-            </p>
-            <nav>
-              <button type='button' class='btn' value='geometry'>Geometry models</button>
-              <button type='button' class='btn' value='physics'>Physics notes</button>
-            </nav>
-          </article>
-          <canvas id='moebius1'></canvas>
-        </section>
+      <div id='main' class='page stretch'>
+        <article class='left'>
+          <h1>Rishabh Ballal</h1>
+          <p>
+            I am a student of Mathematical Physics at Universität Leipzig, specialising in differential geometry and its applications in quantum theory. This site is a platform for the geometric structures that I code.
+          </p><br>
+          <p>
+            <a href='#geometry' class='btn'>Geometry models</a>
+          </p>
+        </article>
+
+        <canvas id='canvas-moebius1'></canvas>
       </div>
 
-      <div id='geometry' class='hidden'>
-        <section class='row'>
+      <div id='geometry' class='page hidden'>
+        <div class='home-btn'>
+          <a href='/' class='btn'>Home</a>
+        </div>
+
+        <article class='centre'>
+          <h2>Geometric structures</h2>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. In ut metus sem. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Sed eget mauris vitae elit dapibus vestibulum vel a mi. Nullam eleifend aliquet erat, vel tincidunt sem posuere a. Etiam laoreet cursus nunc vitae gravida. Etiam vel nibh ultrices, ultricies dolor sit amet, dapibus tellus. Proin posuere vel massa id eleifend. Interdum et malesuada fames ac ante ipsum primis in faucibus.
+          </p><br>
+          <p>
+            Below are some standard 2-dimensional manifolds that are topological embeddings in R<sup>3</sup>.
+          </p>
+        </article>
+
+        <nav>
+          <ul>
+            <li><button type='button' value='sphere' class='btn' id='active'>Sphere</button></li>
+            <li><button type='button' value='hyperboloid' class='btn'>Hyperboloid</button></li>
+            <li><button type='button' value='torus' class='btn'>Torus</button></li>
+            <li><button type='button' value='moebius2' class='btn'>Möbius Strip</button></li>
+          </ul>
+        </nav>
+
+        <section id='sphere' class='stretch'>
           <article class='left'>
             <h2>The Sphere</h2>
             <p></p>
           </article>
-          <canvas id='sphere'></canvas>
+          <canvas id='canvas-sphere'></canvas>
         </section>
-        <section class='row'>
-          <canvas id='hyperboloid'></canvas>
-          <article class='right'>
+
+        <section id='hyperboloid' class='hidden stretch'>
+          <article class='left'>
             <h2>The Hyperboloid</h2>
             <p></p>
           </article>
+          <canvas id='canvas-hyperboloid'></canvas>
         </section>
-        <section class='row'>
+
+        <section id='torus' class='hidden stretch'>
           <article class='left'>
             <h2>The Torus</h2>
             <p></p>
           </article>
-          <canvas id='torus'></canvas>
+          <canvas id='canvas-torus'></canvas>
         </section>
-        <section class='row'>
-          <canvas id='moebius2'></canvas>
-          <article class='right'>
+
+        <section id='moebius2' class='hidden stretch'>
+          <article class='left'>
             <h2>The Möbius Strip</h2>
             <p></p>
           </article>
+          <canvas id='canvas-moebius2'></canvas>
         </section>
       </div>
 
-      <div id='physics' class='hidden'>
-        <section class='row'>
-          <article class='left'>
-            <h2>Classical Mechanics</h2>
-            <p></p>
-          </article>
-          <canvas id='cm'></canvas>
-        </section>
-        <section class='row'>
-          <canvas id='em'></canvas>
-          <article class='right'>
-            <h2>Electrodynamics</h2>
-            <p></p>
-          </article>
-        </section>
-        <section class='row'>
-          <article class='left'>
-            <h2>Special Relativity</h2>
-            <p></p>
-          </article>
-          <canvas id='sr'></canvas>
-        </section>
-        <section class='row'>
-          <canvas id='gr'></canvas>
-          <article class='right'>
-            <h2>General Relativity</h2>
-            <p></p>
-          </article>
-        </section>
+      <div id='geometry-code' class='page hidden'>
+
       </div>
     </main>
   </body>
