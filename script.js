@@ -1,5 +1,5 @@
 function range(start, end, step) {
-  const len = Math.floor((end+step-start)/step);
+  const len = Math.round((end+step-start)/step);
   return Array(len).fill().map((_, e) => start+e*step)
 }
 
@@ -39,7 +39,7 @@ class Manifold {
         eqn(this);
         this.t = this.t%(2*Math.PI) + inc*Math.PI;
       }
-    }, 25);
+    }, 16.67);
   }
 }
 
@@ -62,7 +62,7 @@ function moebiusEqn(obj) {
 function sphereEqn(obj) {
   range(0.01*Math.PI, 0.99*Math.PI, 0.02*Math.PI).forEach(theta => {
     obj.q = [];
-    range(0, 2*Math.PI, 0.01*Math.PI).forEach(phi => {
+    range(0, 2*Math.PI, 0.02*Math.PI).forEach(phi => {
       obj.q.push([
         obj.r*Math.sin(theta)*Math.sin(obj.t+phi),
         obj.r*Math.cos(theta),
@@ -76,7 +76,7 @@ function sphereEqn(obj) {
 function hyperEqn(obj) {
   range(-160, 160, 5).forEach(y => {
     obj.q = [];
-    range(0, 2*Math.PI, 0.01*Math.PI).forEach(phi => {
+    range(0, 2*Math.PI, 0.02*Math.PI).forEach(phi => {
       obj.q.push([
         Math.sqrt(y**2 + obj.r**2)*Math.cos(obj.t+phi),
         y,
@@ -88,7 +88,7 @@ function hyperEqn(obj) {
 }
 
 function torusEqn(obj) {
-  range(0, 2*Math.PI, 0.01*Math.PI).forEach(phi => {
+  range(0, 1.98*Math.PI, 0.02*Math.PI).forEach(phi => {
     obj.q = [];
     range(0, 2*Math.PI, 0.02*Math.PI).forEach(theta => {
       [y, z] = [
@@ -107,21 +107,21 @@ function torusEqn(obj) {
 }
 
 const moebius1 = new Manifold('moebius1', [0.6, 0.95], true);
-moebius1.animate(moebiusEqn, 0.008);
+moebius1.animate(moebiusEqn, 0.005);
 
 const sphere = new Manifold('sphere');
-sphere.animate(sphereEqn, 0.002);
+sphere.animate(sphereEqn, 0.001);
 
 const hyper = new Manifold('hyperboloid');
 hyper.r *= 0.3;
-hyper.animate(hyperEqn, 0.002);
+hyper.animate(hyperEqn, 0.001);
 
 const torus = new Manifold('torus');
 torus.r = [torus.r, 0.3*torus.r];
-torus.animate(torusEqn, 0.002);
+torus.animate(torusEqn, 0.001);
 
 const moebius2 = new Manifold('moebius2');
-moebius2.animate(moebiusEqn, 0.008);
+moebius2.animate(moebiusEqn, 0.005);
 
 let page = 'main';
 const views = Array.from(document.querySelectorAll('.page'))
