@@ -1,20 +1,40 @@
-function range(start, end, step) {
-  const len = Math.round((end+step-start)/step);
-  return Array(len).fill().map((_, e) => start+e*step)
-}
-
 class Manifold {
-  constructor(id, dim=[0.5, 0.8], display=false) {
+  constructor(id, dim=[0.5, 0.8]) {
     this.canvas = document.getElementById(`canvas-${id}`);
     this.canvas.width = dim[0]*window.innerWidth;
     this.canvas.height = dim[1]*window.innerHeight;
     this.ctx = this.canvas.getContext('2d');
     this.ctx.translate(0, this.canvas.height);
     this.ctx.scale(1, -1);
+    this.q = [];
     this.r = 0.25*this.canvas.width;
     this.t = 0;
     this.cam = Math.max(this.canvas.width, this.canvas.height);
-    this.display = display;
+  }
+
+  rotate(axis, angle) {
+    // create generic algorithm
+    this.q.forEach((q_, i) => {
+      let x, y, z;
+      switch(axis) {
+        case 'x':
+        x = q_[0];
+        y = q_[1]*Math.cos(angle) - q_[2]*Math.sin(angle);
+        z = q_[1]*Math.sin(angle) + q_[2]*Math.cos(angle);
+        break;
+        case 'y':
+        x = q_[2]*Math.sin(angle) + q_[0]*Math.cos(angle);
+        y = q_[1];
+        z = q_[2]*Math.cos(angle) - q_[0]*Math.sin(angle);
+        break;
+        case 'z':
+        x = q_[0]*Math.cos(angle) - q_[1]*Math.sin(angle);
+        y = q_[0]*Math.sin(angle) + q_[1]*Math.cos(angle);
+        z = q_[2];
+        break;
+      }
+      this.q[i] = [x, y, z];
+    });
   }
 
   project() {
@@ -31,97 +51,92 @@ class Manifold {
     this.ctx.strokeStyle = '#007070';
     this.ctx.stroke();
   }
-
-  animate(eqn, inc) {
-    setInterval(() => {
-      this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-      if (this.display) {
-        eqn(this);
-        this.t = this.t%(2*Math.PI) + inc*Math.PI;
-      }
-    }, 16.67);
-  }
 }
 
-function moebiusEqn(obj) {
+function range(start, end, step) {
+  const len = Math.round((end-start)/step);
+  return Array(len).fill().map((_, e) => start+e*step)
+}
+
+function moebiusEqn(obj, phase) {
   range(1, 25, 2).forEach(r_ => {
     r_ *= 0.01*obj.r;
-    obj.q = [];
     range(0, 4*Math.PI, 0.01*Math.PI).forEach(phi => {
-      const theta = obj.t+0.5*phi;
       obj.q.push([
-        1.2*(obj.r + r_*Math.sin(theta))*Math.cos(phi),
-        0.8*(obj.r + r_*Math.sin(theta))*Math.sin(phi),
-        r_*Math.cos(theta),
+        1.2*(obj.r + r_*Math.sin(0.5*phi+phase))*Math.cos(phi),
+        0.8*(obj.r + r_*Math.sin(0.5*phi+phase))*Math.sin(phi),
+        r_*Math.cos(0.5*phi+phase),
       ]);
     });
-    obj.project();
   });
 }
 
 function sphereEqn(obj) {
-  range(0.01*Math.PI, 0.99*Math.PI, 0.02*Math.PI).forEach(theta => {
-    obj.q = [];
+  range(0.02*Math.PI, Math.PI, 0.02*Math.PI).forEach(theta => {
     range(0, 2*Math.PI, 0.02*Math.PI).forEach(phi => {
       obj.q.push([
-        obj.r*Math.sin(theta)*Math.sin(obj.t+phi),
+        obj.r*Math.sin(theta)*Math.sin(phi),
         obj.r*Math.cos(theta),
-        obj.r*Math.sin(theta)*Math.cos(obj.t+phi),
+        obj.r*Math.sin(theta)*Math.cos(phi),
       ])
     });
-    obj.project();
   });
 }
 
 function hyperEqn(obj) {
   range(-160, 160, 5).forEach(y => {
-    obj.q = [];
     range(0, 2*Math.PI, 0.02*Math.PI).forEach(phi => {
       obj.q.push([
-        Math.sqrt(y**2 + obj.r**2)*Math.cos(obj.t+phi),
+        Math.sqrt(y**2 + obj.r**2)*Math.cos(phi),
         y,
-        Math.sqrt(y**2 + obj.r**2)*Math.sin(obj.t+phi),
+        Math.sqrt(y**2 + obj.r**2)*Math.sin(phi),
       ])
     });
-    obj.project();
   });
 }
 
 function torusEqn(obj) {
-  range(0, 1.98*Math.PI, 0.02*Math.PI).forEach(phi => {
-    obj.q = [];
+  range(0, 2*Math.PI, 0.02*Math.PI).forEach(phi => {
     range(0, 2*Math.PI, 0.02*Math.PI).forEach(theta => {
-      [y, z] = [
-        (obj.r[0] + obj.r[1]*Math.sin(theta))*Math.sin(obj.t+phi),
-        obj.r[1]*Math.cos(theta),
-      ];
-      const rot = 0.36*Math.PI;
       obj.q.push([
-        (obj.r[0] + obj.r[1]*Math.sin(theta))*Math.cos(obj.t+phi),
-        y*Math.cos(rot) + z*Math.sin(rot),
-        -y*Math.sin(rot) + z*Math.cos(rot),
+        (obj.r[0] + obj.r[1]*Math.sin(theta))*Math.cos(phi),
+        (obj.r[0] + obj.r[1]*Math.sin(theta))*Math.sin(phi),
+        obj.r[1]*Math.cos(theta),
       ])
     });
-    obj.project();
   });
 }
 
-const moebius1 = new Manifold('moebius1', [0.6, 0.95], true);
-moebius1.animate(moebiusEqn, 0.005);
+const moebius1 = new Manifold('moebius1', [0.6, 0.95]);
+const interval = setInterval(() => {
+  moebius1.ctx.clearRect(0, 0, moebius1.canvas.width, moebius1.canvas.height);
+  moebius1.q = [];
+  moebiusEqn(moebius1, moebius1.t);
+  moebius1.project();
+  moebius1.t = moebius1.t%(2*Math.PI) + 0.006*Math.PI;
+}, 20);
 
 const sphere = new Manifold('sphere');
-sphere.animate(sphereEqn, 0.001);
+sphereEqn(sphere);
+sphere.rotate('x', 0.16*Math.PI);
+sphere.project();
 
 const hyper = new Manifold('hyperboloid');
 hyper.r *= 0.3;
-hyper.animate(hyperEqn, 0.001);
+hyperEqn(hyper);
+hyper.project();
 
 const torus = new Manifold('torus');
 torus.r = [torus.r, 0.3*torus.r];
-torus.animate(torusEqn, 0.001);
+torusEqn(torus);
+torus.rotate('x', 0.64*Math.PI);
+torus.project();
 
 const moebius2 = new Manifold('moebius2');
-moebius2.animate(moebiusEqn, 0.005);
+moebiusEqn(moebius2, 0.36*Math.PI);
+moebius2.rotate('x', 0.36*Math.PI);
+moebius2.rotate('z', Math.PI);
+moebius2.project();
 
 let page = 'main';
 const views = Array.from(document.querySelectorAll('.page'))
@@ -130,16 +145,15 @@ const views = Array.from(document.querySelectorAll('.page'))
 function renderPage(id) {
   if (views.includes(window.location.hash.slice(1))) {
     document.getElementById(page).classList.add('hidden');
+    clearInterval(interval);
     document.getElementById(id).classList.remove('hidden');
-    if (page == 'main') moebius1.display = false;
-    page = id;
-    // document.title
+    const title = id[0].toUpperCase().concat(id.slice(1)).split('-').join(' ');
+    document.title = `${title} - Rishabh Ballal`;
 
-    switch (page) {
-      case 'geometry':
-      let active = 'sphere';
-      sphere.display = true;
+    if (id == 'geometry') {
+      let active = document.getElementById('active').value;
       const nav = document.querySelectorAll('nav button');
+      document.getElementById(active).classList.remove('hidden');
       nav.forEach(btn => {
         btn.addEventListener('click', e => {
           if (event.target.value != active) {
@@ -147,20 +161,12 @@ function renderPage(id) {
             e.target.id = 'active';
             document.getElementById(active).classList.add('hidden');
             document.getElementById(e.target.value).classList.remove('hidden');
-            // create array of Manifold instances
-            [sphere, hyper, torus, moebius2]
-              .find(c => c.canvas.id == `canvas-${active}`).display = false;
-            [sphere, hyper, torus, moebius2]
-              .find(c => c.canvas.id == `canvas-${e.target.value}`).display = true;
             active = e.target.value;
           }
         });
       });
-      break;
-      case 'geometry-code':
-
-      break;
     }
+    page = id;
   } else {
     window.location.replace('/');
   }
