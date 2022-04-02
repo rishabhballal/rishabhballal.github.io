@@ -88,17 +88,21 @@ nav ul {
 
 nav .btn {
   width: 100%;
+  background-color: #f7f7f7;
   border: #f7f7f7 solid 1px;
   border-bottom: #ccc solid 1px;
-  background-color: #f7f7f7;
+}
+
+nav .btn:hover {
+  border: #ccc solid 1px;
 }
 
 nav #active {
+  background-color: #fff;
   border: #ccc solid 1px;
   border-bottom: #fff solid 1px;
   transition: 0ms;
   cursor: default;
-  background-color: #fff;
 }
 
 .hidden {
