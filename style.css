@@ -27,7 +27,11 @@ h2 {
 a {
   text-decoration: none;
   color: inherit;
-  border-bottom: #444 solid 1px;
+}
+
+a.inline {
+  font-family: Georgia;
+  font-style: italic;
 }
 
 .stretch {
@@ -93,7 +97,8 @@ nav .btn {
   border-bottom: #ccc solid 1px;
 }
 
-nav .btn:hover {
+nav .btn:hover,
+nav .btn:focus {
   border: #ccc solid 1px;
 }
 
