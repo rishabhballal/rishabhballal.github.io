@@ -12,15 +12,12 @@
   </head>
   <body>
     <main>
-      <div id='main' class='page stretch'>
+      <div id='main' class='page stretch hidden'>
         <article class='left'>
           <h1>Rishabh Ballal</h1>
-          <p>
-            I am a student of Mathematical Physics at Universität Leipzig, specialising in differential geometry and its applications in quantum theory. This site is a platform for the geometric structures that I code.
-          </p><br>
-          <p>
-            <a href='#geometry' class='btn'>Geometry models</a>
-          </p>
+          <p>I am a student of Mathematical Physics at Universität Leipzig, specialising in differential geometry and its applications in quantum theory. This site is a platform for the geometric structures that I code.</p>
+          <br>
+          <p><a href='#geometry' class='btn'>Geometry models</a></p>
         </article>
         <canvas id='canvas-moebius1'></canvas>
       </div>
@@ -30,31 +27,28 @@
           <a href='/' class='btn'>Home</a>
         </div>
 
-        <article class='centre'>
+        <article class='centre bg-grey'>
           <h2>Geometric structures</h2>
           <p>The simplest mathematical structure is a set. Addition of certain axioms at each stage elevate the set into more useful geometric structures. Once it is equipped with a topology, it can be extended to a topological manifold.</p>
           <br>
-          <p>Below are some standard 2-dimensional manifolds that are topological embeddings in the familiar 3-dimensional Euclidean space R<sup>3</sup>. For the algorithms behind the models, refer: <a href='#geometry-code' class='inline'>geometry code</a>.</p>
+          <p>Below are some standard 2-dimensional manifolds that are topological embeddings in the familiar 3-dimensional Euclidean space R<sup>3</sup>. For the algorithm behind these models, refer this <a href='#geometry-code' class='link'>minimal working example of a torus</a>.</p>
         </article>
 
         <nav>
           <ul>
-            <li><button type='button' value='sphere' class='btn' id='active'>Sphere</button></li>
-            <li><button type='button' value='hyperboloid' class='btn'>Hyperboloid</button></li>
-            <li><button type='button' value='torus' class='btn'>Torus</button></li>
-            <li><button type='button' value='moebius2' class='btn'>Möbius Strip</button></li>
+            <li><button type='button' value='sphere' class='btn bg-grey' id='active'>Sphere</button></li>
+            <li><button type='button' value='hyperboloid' class='btn bg-grey'>Hyperboloid</button></li>
+            <li><button type='button' value='torus' class='btn bg-grey'>Torus</button></li>
+            <li><button type='button' value='moebius2' class='btn bg-grey'>Möbius Strip</button></li>
           </ul>
         </nav>
 
         <section id='sphere' class='stretch hidden'>
           <article class='left'>
             <h2>The Sphere</h2>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. In ut metus sem. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Sed eget mauris vitae elit dapibus vestibulum vel a mi.
-            </p><br>
-            <p>
-              Nullam eleifend aliquet erat, vel tincidunt sem posuere a. Etiam laoreet cursus nunc vitae gravida. Etiam vel nibh ultrices, ultricies dolor sit amet, dapibus tellus. Proin posuere vel massa id eleifend. Interdum et malesuada fames ac ante ipsum primis in faucibus.
-            </p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In ut metus sem. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Sed eget mauris vitae elit dapibus vestibulum vel a mi.</p>
+            <br>
+            <p>Nullam eleifend aliquet erat, vel tincidunt sem posuere a. Etiam laoreet cursus nunc vitae gravida. Etiam vel nibh ultrices, ultricies dolor sit amet, dapibus tellus. Proin posuere vel massa id eleifend. Interdum et malesuada fames ac ante ipsum primis in faucibus.</p>
           </article>
           <canvas id='canvas-sphere'></canvas>
         </section>
@@ -62,12 +56,9 @@
         <section id='hyperboloid' class='stretch hidden'>
           <article class='left'>
             <h2>The Hyperboloid</h2>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. In ut metus sem. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Sed eget mauris vitae elit dapibus vestibulum vel a mi.
-            </p><br>
-            <p>
-              Nullam eleifend aliquet erat, vel tincidunt sem posuere a. Etiam laoreet cursus nunc vitae gravida. Etiam vel nibh ultrices, ultricies dolor sit amet, dapibus tellus. Proin posuere vel massa id eleifend. Interdum et malesuada fames ac ante ipsum primis in faucibus.
-            </p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In ut metus sem. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Sed eget mauris vitae elit dapibus vestibulum vel a mi.</p>
+            <br>
+            <p>Nullam eleifend aliquet erat, vel tincidunt sem posuere a. Etiam laoreet cursus nunc vitae gravida. Etiam vel nibh ultrices, ultricies dolor sit amet, dapibus tellus. Proin posuere vel massa id eleifend. Interdum et malesuada fames ac ante ipsum primis in faucibus.</p>
           </article>
           <canvas id='canvas-hyperboloid'></canvas>
         </section>
@@ -75,12 +66,9 @@
         <section id='torus' class='stretch hidden'>
           <article class='left'>
             <h2>The Torus</h2>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. In ut metus sem. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Sed eget mauris vitae elit dapibus vestibulum vel a mi.
-            </p><br>
-            <p>
-              Nullam eleifend aliquet erat, vel tincidunt sem posuere a. Etiam laoreet cursus nunc vitae gravida. Etiam vel nibh ultrices, ultricies dolor sit amet, dapibus tellus. Proin posuere vel massa id eleifend. Interdum et malesuada fames ac ante ipsum primis in faucibus.
-            </p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In ut metus sem. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Sed eget mauris vitae elit dapibus vestibulum vel a mi.</p>
+            <br>
+            <p>Nullam eleifend aliquet erat, vel tincidunt sem posuere a. Etiam laoreet cursus nunc vitae gravida. Etiam vel nibh ultrices, ultricies dolor sit amet, dapibus tellus. Proin posuere vel massa id eleifend. Interdum et malesuada fames ac ante ipsum primis in faucibus.</p>
           </article>
           <canvas id='canvas-torus'></canvas>
         </section>
@@ -88,19 +76,50 @@
         <section id='moebius2' class='stretch hidden'>
           <article class='left'>
             <h2>The Möbius Strip</h2>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. In ut metus sem. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Sed eget mauris vitae elit dapibus vestibulum vel a mi.
-            </p><br>
-            <p>
-              Nullam eleifend aliquet erat, vel tincidunt sem posuere a. Etiam laoreet cursus nunc vitae gravida. Etiam vel nibh ultrices, ultricies dolor sit amet, dapibus tellus. Proin posuere vel massa id eleifend. Interdum et malesuada fames ac ante ipsum primis in faucibus.
-            </p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In ut metus sem. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Sed eget mauris vitae elit dapibus vestibulum vel a mi.</p>
+            <br>
+            <p>Nullam eleifend aliquet erat, vel tincidunt sem posuere a. Etiam laoreet cursus nunc vitae gravida. Etiam vel nibh ultrices, ultricies dolor sit amet, dapibus tellus. Proin posuere vel massa id eleifend. Interdum et malesuada fames ac ante ipsum primis in faucibus.</p>
           </article>
           <canvas id='canvas-moebius2'></canvas>
         </section>
       </div>
 
       <div id='geometry-code' class='page hidden'>
+        <div class='home-btn'>
+          <a href='/' class='btn'>Home</a>
+        </div>
 
+        <article class='centre'>
+          <h2>Constructing 3D models using canvas in JavaScript</h2>
+          <p>Since there are multiple models on this site, object-oriented programming can eliminate repetitive code. The entire code can be found in the <span class='code bg-grey'>script.js</span> file on the <a href='https://github.com/rishabhballal/rishabhballal.github.io' target='_blank' class='link'>Github repository for this site</a>. Given here, for simplicity, is a sequential breakdown of a single model - the torus. </p>
+          <br>
+          <h3>Canvas initialisation</h3>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In ut metus sem. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Sed eget mauris vitae elit dapibus vestibulum vel a mi.</p>
+          <br>
+          <script src="https://gist.github.com/rishabhballal/eb612f0072bf3e330e9af38625308fca.js"></script>
+          <br>
+          <h3>Torus coordinates</h3>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In ut metus sem. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Sed eget mauris vitae elit dapibus vestibulum vel a mi.</p>
+          <br>
+          <script src="https://gist.github.com/rishabhballal/bd6c19cca6d7f2999ce7d04592c0f377.js"></script>
+          <br>
+          <h3>Orientation</h3>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In ut metus sem. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Sed eget mauris vitae elit dapibus vestibulum vel a mi.</p>
+          <br>
+          <script src="https://gist.github.com/rishabhballal/422f48f8980965326ebcbff7b6cbbe13.js"></script>
+          <br>
+          <h3>Stereographic projection</h3>
+          <p>Nullam eleifend aliquet erat, vel tincidunt sem posuere a. Etiam laoreet cursus nunc vitae gravida. Etiam vel nibh ultrices, ultricies dolor sit amet, dapibus tellus. Proin posuere vel massa id eleifend. Interdum et malesuada fames ac ante ipsum primis in faucibus.</p>
+          <br>
+          <script src="https://gist.github.com/rishabhballal/161189b5cd837752712f3a76d3c4d67a.js"></script>
+          <br>
+          <h3>The minimal working example</h3>
+          <p>Nullam eleifend aliquet erat, vel tincidunt sem posuere a. Etiam laoreet cursus nunc vitae gravida. Etiam vel nibh ultrices, ultricies dolor sit amet, dapibus tellus. Proin posuere vel massa id eleifend. Interdum et malesuada fames ac ante ipsum primis in faucibus.</p>
+          <br>
+          <script src="https://gist.github.com/rishabhballal/a0a402bd1540a2da1f4917aec76d3654.js"></script>
+          <br>
+          <script src="https://gist.github.com/rishabhballal/fc31a6e40646933e2e033e12a2d816b7.js"></script>
+        </article>
       </div>
     </main>
   </body>
