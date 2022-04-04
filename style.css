@@ -41,6 +41,7 @@ a {
 a.link {
   font-family: Georgia, serif;
   font-style: italic;
+  text-decoration: underline;
 }
 
 .stretch {
