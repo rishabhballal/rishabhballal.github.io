@@ -8,7 +8,8 @@
     <link rel='stylesheet' href='style.css' type='text/css'>
     <link rel='preconnect' href='https://fonts.gstatic.com' crossorigin>
     <link rel='stylesheet' href='https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400&display=swap'>
-    <script defer src='script.js' type='text/javascript'></script>
+    <script defer src='models.js' type='text/javascript'></script>
+    <script defer src='views.js' type='text/javascript'></script>
   </head>
   <body>
     <main>
@@ -29,9 +30,9 @@
 
         <article class='centre bg-grey'>
           <h2>Geometric structures</h2>
-          <p>The simplest mathematical structure is a set. Addition of certain axioms at each stage elevate the set into more useful geometric structures. Once it is equipped with a topology, it can be extended to a topological manifold.</p>
+          <p>intrinsic nature of manifolds</p>
           <br>
-          <p>Below are some standard 2-dimensional manifolds that are topological embeddings in the familiar 3-dimensional Euclidean space R<sup>3</sup>. For the algorithm behind these models, refer this <a href='#geometry-code' class='link'>minimal working example of a torus</a>.</p>
+          <p>Below are some standard 2-dimensional manifolds that are topological embeddings in the familiar 3-dimensional Euclidean space R<sup>3</sup>. For the algorithm behind these models, refer this <a href='#geometry-code' class='link'>example of a 2-torus</a>.</p>
         </article>
 
         <nav>
@@ -86,39 +87,35 @@
 
       <div id='geometry-code' class='page hidden'>
         <div class='home-btn'>
-          <a href='/' class='btn'>Home</a>
+          <a href='/#geometry' class='btn'>Back</a>
         </div>
 
         <article class='centre'>
           <h2>Constructing 3D models using canvas in JavaScript</h2>
-          <p>Since there are multiple models on this site, object-oriented programming can eliminate repetitive code. The entire code can be found in the <span class='code bg-grey'>script.js</span> file on the <a href='https://github.com/rishabhballal/rishabhballal.github.io' target='_blank' class='link'>Github repository for this site</a>. Given here, for simplicity, is a sequential breakdown of a single model - the torus. </p>
+          <p>Since there are multiple models on this site, object-oriented programming eliminates repetitive code. That particular approach can be found in the <span class='code bg-grey'>models.js</span> file on the <a href='https://github.com/rishabhballal/rishabhballal.github.io' target='_blank' class='link'>Github repository for this site</a>. Given here, for simplicity, is a sequential breakdown of a single model - the 2-torus. </p>
           <br>
           <h3>Canvas initialisation</h3>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In ut metus sem. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Sed eget mauris vitae elit dapibus vestibulum vel a mi.</p>
+          <p>The <a href='https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API' target='_blank' class='link'>Canvas API</a> is used to create graphics in JavaScript and render them in HTML. Lines 5-6 centre the canvas origin and invert the Y-axis, so as to work in the usual Cartesian coordinate system.</p>
           <br>
           <script src="https://gist.github.com/rishabhballal/eb612f0072bf3e330e9af38625308fca.js"></script>
           <br>
-          <h3>Torus coordinates</h3>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In ut metus sem. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Sed eget mauris vitae elit dapibus vestibulum vel a mi.</p>
+          <h3>Coordinates</h3>
+          <p>From its mathematical identification with the direct product of two 1-spheres (or by simple visual intuition), the 2-torus needs only two angles <span class='code'>phi</span> and <span class='code'>theta</span> to parameterize its coordinates. Conversion of the coordinates from spherical to Cartesian is given by the equations in lines 12-14.</p>
           <br>
           <script src="https://gist.github.com/rishabhballal/bd6c19cca6d7f2999ce7d04592c0f377.js"></script>
           <br>
           <h3>Orientation</h3>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In ut metus sem. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Sed eget mauris vitae elit dapibus vestibulum vel a mi.</p>
+          <p>Rotating the model can provide a better view. This is done by multiplying each coordinate with the chosen <a href='https://en.wikipedia.org/wiki/Rotation_matrix#In_three_dimensions' target='_blank' class='link'>rotation matrix</a>. Although not immediately obvious, the general rotation equations given in lines 5-7 result from the cyclic nature of Cartesian coordinates.</p>
           <br>
           <script src="https://gist.github.com/rishabhballal/422f48f8980965326ebcbff7b6cbbe13.js"></script>
           <br>
           <h3>Stereographic projection</h3>
-          <p>Nullam eleifend aliquet erat, vel tincidunt sem posuere a. Etiam laoreet cursus nunc vitae gravida. Etiam vel nibh ultrices, ultricies dolor sit amet, dapibus tellus. Proin posuere vel massa id eleifend. Interdum et malesuada fames ac ante ipsum primis in faucibus.</p>
+          <p>In the final step, it is necessary to plot a 3-dimensional coordinates on a 2-dimensional screen. Projection eliminates the third coordinate, but not before encoding its information in the first two coordinates.</p>
           <br>
           <script src="https://gist.github.com/rishabhballal/161189b5cd837752712f3a76d3c4d67a.js"></script>
+          <p>As can be seen in the equations of <a href='https://en.wikipedia.org/wiki/Stereographic_projection' target='_blank' class='link'>stereographic projection</a> on lines 3-4, the projected coordinates are proportional to the first two coordinates, scaled by a factor which depends on the third. The variable <span class='code'>dist</span> represents the distance, in the direction of the third coordinate, from which one is observing the model. If it is too small, the projection will diverge to infinity, and if it is too large, it will not lend the perspective of depth. The remaining lines of code exhibit simple use of the canvas context in drawing lines that connect the coordinates.</p>
           <br>
-          <h3>The minimal working example</h3>
-          <p>Nullam eleifend aliquet erat, vel tincidunt sem posuere a. Etiam laoreet cursus nunc vitae gravida. Etiam vel nibh ultrices, ultricies dolor sit amet, dapibus tellus. Proin posuere vel massa id eleifend. Interdum et malesuada fames ac ante ipsum primis in faucibus.</p>
-          <br>
-          <script src="https://gist.github.com/rishabhballal/a0a402bd1540a2da1f4917aec76d3654.js"></script>
-          <br>
-          <script src="https://gist.github.com/rishabhballal/fc31a6e40646933e2e033e12a2d816b7.js"></script>
+          <p>Compiling the above four snippets of code will yield the 2-torus model from the previous page, while the other models can be recreated with an appropriate modification of the coordinate equations.</p>
         </article>
       </div>
     </main>
