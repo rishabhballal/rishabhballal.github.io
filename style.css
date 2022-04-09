@@ -44,6 +44,10 @@ a.link {
   text-decoration: underline;
 }
 
+i {
+  font-family: Georgia, serif;
+}
+
 .stretch {
   display: flex;
   align-items: center;
