@@ -9,23 +9,6 @@ function renderPage(id) {
     document.getElementById(id).classList.remove('hidden');
     const title = id[0].toUpperCase().concat(id.slice(1)).split('-').join(' ');
     document.title = `${title} - Rishabh Ballal`;
-
-    if (id == 'geometry') {
-      let active = document.getElementById('active').value;
-      const nav = document.querySelectorAll('nav button');
-      document.getElementById(active).classList.remove('hidden');
-      nav.forEach(btn => {
-        btn.addEventListener('click', e => {
-          if (event.target.value != active) {
-            Array.from(nav).find(i => i.value == active).id = '';
-            e.target.id = 'active';
-            document.getElementById(active).classList.add('hidden');
-            document.getElementById(e.target.value).classList.remove('hidden');
-            active = e.target.value;
-          }
-        });
-      });
-    }
     page = id;
   } else {
     window.location.replace('/');
@@ -44,4 +27,20 @@ window.addEventListener('popstate', () => {
   } else {
     window.location.replace('/');
   }
+});
+
+
+let active = document.getElementById('active').value;
+const nav = document.querySelectorAll('nav button');
+document.getElementById(active).classList.remove('hidden');
+nav.forEach(btn => {
+  btn.addEventListener('click', e => {
+    if (event.target.value != active) {
+      Array.from(nav).find(i => i.value == active).id = '';
+      e.target.id = 'active';
+      document.getElementById(active).classList.add('hidden');
+      document.getElementById(e.target.value).classList.remove('hidden');
+      active = e.target.value;
+    }
+  });
 });
