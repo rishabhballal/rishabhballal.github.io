@@ -1,8 +1,13 @@
 class Manifold {
   constructor(id, dim=[0.5, 0.8]) {
     this.canvas = document.getElementById(`canvas-${id}`);
-    this.canvas.width = dim[0]*window.innerWidth;
-    this.canvas.height = dim[1]*window.innerHeight;
+    if (window.innerWidth > 768) {
+      this.canvas.width = dim[0]*window.innerWidth;
+      this.canvas.height = dim[1]*window.innerHeight;
+    } else {
+      this.canvas.width = window.innerWidth;
+      this.canvas.height = 0.6*window.innerWidth;
+    }
     this.ctx = this.canvas.getContext('2d');
     this.ctx.translate(0.5*this.canvas.width, 0.5*this.canvas.height);
     this.ctx.scale(1, -1);

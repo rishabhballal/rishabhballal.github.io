@@ -22,13 +22,16 @@
   <body>
     <main>
       <div id='main' class='page stretch hidden'>
-        <article class='left'>
+        <canvas id='canvas-moebius1'></canvas>
+        <article class='half'>
           <h1>Rishabh Ballal</h1>
           <p>As a student of Mathematical Physics at Universität Leipzig, I am primarily studying differential geometry, and implement its concepts in coding a few geometric models.</p>
-          <br>
-          <p><a href='#geometric-models' class='btn'>Geometric models</a></p>
+          <nav>
+            <ul>
+              <li><a href='#geometric-models' class='btn'>Geometric models</a></li>
+            </ul>
+          </nav>
         </article>
-        <canvas id='canvas-moebius1'></canvas>
       </div>
 
       <div id='geometric-models' class='page hidden'>
@@ -45,43 +48,41 @@
           <p>The simplest examples are some familiar 2-dimensional manifolds, as shown below. (For the code behind the models, refer: <a href='#geometric-models-code' class='link'>constructing 3D models using canvas in JavaScript</a>.)</p>
         </article>
 
-        <nav>
-          <ul>
-            <li><button type='button' value='sphere' class='btn bg-grey' id='active'>Sphere</button></li>
-            <li><button type='button' value='hyperboloid' class='btn bg-grey'>Hyperboloid</button></li>
-            <li><button type='button' value='torus' class='btn bg-grey'>Torus</button></li>
-            <li><button type='button' value='moebius2' class='btn bg-grey'>Möbius Strip</button></li>
-          </ul>
-        </nav>
+        <ul class='subnav'>
+          <li><button type='button' value='sphere' class='btn bg-grey' id='active'>Sphere</button></li>
+          <li><button type='button' value='hyperboloid' class='btn bg-grey'>Hyperboloid</button></li>
+          <li><button type='button' value='torus' class='btn bg-grey'>Torus</button></li>
+          <li><button type='button' value='moebius2' class='btn bg-grey'>Möbius Strip</button></li>
+        </ul>
 
-        <section id='sphere' class='stretch hidden'>
-          <article class='left'>
+        <section id='sphere' class='stretch'>
+          <article class='half'>
             <h2>The Sphere</h2>
             <p>A representation of perhaps the most interesting symmetry in Nature, the sphere carves its way into most fields of physics. In geometry, it is the standard example of positive curvature, and is also simply-connected, which means that any closed curve on its surface can be continuously contracted to a point on the same curve.</p>
           </article>
           <canvas id='canvas-sphere'></canvas>
         </section>
 
-        <section id='hyperboloid' class='stretch hidden'>
-          <article class='left'>
+        <section id='hyperboloid' class='stretch'>
+          <article class='half'>
             <h2>The Hyperboloid</h2>
             <p>Contrary to the sphere, the hyperboloid is the standard example of negative curvature, and finds itself primarily amongst cosmological models. Depicted alongside is the one-sheeted version, which is connected unlike the two-sheeted hyperboloid.</p>
           </article>
           <canvas id='canvas-hyperboloid'></canvas>
         </section>
 
-        <section id='torus' class='stretch hidden'>
-          <article class='left'>
+        <section id='torus' class='stretch'>
+          <article class='half'>
             <h2>The Torus</h2>
             <p>More popularly known as the donut, the torus is constructed by assigning a circle to each point of another circle. As any closed curve that wraps around the torus cannot be contracted to a point, the torus only differs from the sphere in that it is not simply-connected.</p>
           </article>
           <canvas id='canvas-torus'></canvas>
         </section>
 
-        <section id='moebius2' class='stretch hidden'>
-          <article class='left'>
+        <section id='moebius2' class='stretch'>
+          <article class='half'>
             <h2>The Möbius Strip</h2>
-            <p>Having only one edge and one surface, the Möbius strip is a non-orientable manifold; traversing the strip results in an inversion of axis orientation after each loop. One can model the Möbius strip by recognising the boundary of the strip as a closed curve on the torus, as is done alongside and in the animation on the homepage.</p>
+            <p>Having only one edge and one surface, the Möbius strip is a non-orientable manifold; traversing the strip results in an inversion of axis orientation after each loop. One can model the Möbius strip by recognising its boundary as a closed curve on the torus.</p>
           </article>
           <canvas id='canvas-moebius2'></canvas>
         </section>

@@ -14,7 +14,7 @@ body {
   background-color: #fff;
   font-size: 16px;
   font-family: Quicksand, sans-serif;
-  line-height: 2;
+  line-height: 1.6;
 }
 
 h1,
@@ -26,11 +26,16 @@ h3 {
 
 h1,
 h2 {
-  font-size: 2rem;
+  font-size: 1.6rem;
 }
 
 h3 {
   font-size: 1.3rem;
+}
+
+nav ul {
+  padding: 30px 0;
+  list-style-type: none;
 }
 
 a {
@@ -48,23 +53,16 @@ i {
   font-family: Georgia, serif;
 }
 
-.stretch {
-  display: flex;
-  align-items: center;
-  width: 100vw;
+p {
+  line-height: 2;
 }
 
 .centre {
-  padding: 10vh 20vw;
+  padding: 80px 20px;
 }
 
-.left {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding-left: 80px;
+.half {
+  padding: 20px;
 }
 
 .btn {
@@ -84,42 +82,14 @@ i {
 }
 
 .home-btn {
-  position: fixed;
-  top: 20px;
+  position: absolute;
+  top: 30px;
   left: 20px;
   z-index: 1;
 }
 
-nav {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-nav ul {
-  list-style-type: none;
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  width: 100%;
-}
-
-nav .btn {
-  width: 100%;
-  border: #f7f7f7 solid 1px;
-  border-bottom: #ccc solid 1px;
-}
-
-nav .btn:hover,
-nav .btn:focus {
-  border: #ccc solid 1px;
-}
-
-nav #active {
-  background-color: #fff;
-  border: #ccc solid 1px;
-  border-bottom: #fff solid 1px;
-  transition: 0ms;
-  cursor: default;
+.subnav {
+  display: none;
 }
 
 .code {
@@ -132,6 +102,64 @@ nav #active {
 
 .bg-grey {
   background-color: #f7f7f7;
+}
+
+@media screen and (min-width: 768px) {
+  h1,
+  h2 {
+    font-size: 2rem;
+  }
+
+  .stretch {
+    display: flex;
+    align-items: center;
+    width: 100vw;
+  }
+
+  .centre {
+    padding: 10vh 20vw;
+  }
+
+  .half {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-left: 80px;
+  }
+
+  .home-btn {
+    position: fixed;
+  }
+
+  .subnav {
+    list-style-type: none;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    align-items: center;
+    width: 100%;
+  }
+
+  .subnav .btn {
+    width: 100%;
+    border: #f7f7f7 solid 1px;
+    border-bottom: #ccc solid 1px;
+    padding: 10px;
+  }
+
+  .subnav .btn:hover,
+  .subnav .btn:focus {
+    border: #ccc solid 1px;
+  }
+
+  .subnav #active {
+    background-color: #fff;
+    border: #ccc solid 1px;
+    border-bottom: #fff solid 1px;
+    transition: 0ms;
+    cursor: default;
+  }
 }
 
 .hidden {
