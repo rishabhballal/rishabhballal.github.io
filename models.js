@@ -13,7 +13,7 @@ class Manifold {
     this.ctx.scale(1, -1);
     this.q = [];
     this.r = 0.25*this.canvas.width;
-    this.cam = this.canvas.width;
+    this.cam = Math.max(this.canvas.width, this.canvas.height);
   }
 
   rotate(axis, angle) {
@@ -75,7 +75,7 @@ function sphereEqn(obj) {
 }
 
 function hyperEqn(obj) {
-  range(-160, 160, 5).forEach(z => {
+  range(-3*obj.r, 3*obj.r, 5).forEach(z => {
     range(0, 2*Math.PI, 0.02*Math.PI).forEach(phi => {
       obj.q.push([
         Math.sqrt(z**2 + obj.r**2)*Math.cos(phi),
