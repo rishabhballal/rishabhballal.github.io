@@ -11,6 +11,10 @@
     <link rel='stylesheet' href='style.css' type='text/css'>
     <link rel='preconnect' href='https://fonts.gstatic.com' crossorigin>
     <link rel='stylesheet' href='https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400&display=swap'>
+
+    <script type='text/javascript'>
+      const breakpoint = 1366;
+    </script>
     <script defer src='models.js' type='text/javascript'></script>
     <script defer src='views.js' type='text/javascript'></script>
 
@@ -41,7 +45,7 @@
           <a href='/' class='btn'>Home</a>
         </div>
 
-        <article class='centre bg-grey'>
+        <article class='centre'>
           <h2>Geometric models</h2>
           <p>One naturally visualises a geometric structure in 3-dimensional space (R<sup>3</sup>). How then does the mathematician understand an <i>n</i>-dimensional structure in the absence of an ambient space? In the first step towards an intrinsic formulation that reflects the underlying geometry, the mathematician develops the notion of a <i>manifold</i>.</p>
           <br>
@@ -51,10 +55,10 @@
         </article>
 
         <ul class='subnav'>
-          <li><button type='button' value='sphere' class='btn bg-grey' id='active'>Sphere</button></li>
-          <li><button type='button' value='hyperboloid' class='btn bg-grey'>Hyperboloid</button></li>
-          <li><button type='button' value='torus' class='btn bg-grey'>Torus</button></li>
-          <li><button type='button' value='moebius2' class='btn bg-grey'>Möbius Strip</button></li>
+          <li><button type='button' value='sphere' class='btn' id='active'>Sphere</button></li>
+          <li><button type='button' value='hyperboloid' class='btn'>Hyperboloid</button></li>
+          <li><button type='button' value='torus' class='btn'>Torus</button></li>
+          <li><button type='button' value='moebius2' class='btn'>Möbius Strip</button></li>
         </ul>
 
         <section id='sphere' class='stretch'>

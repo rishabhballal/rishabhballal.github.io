@@ -14,7 +14,7 @@ body {
   background-color: #fff;
   font-size: 16px;
   font-family: Quicksand, sans-serif;
-  line-height: 1.6;
+  line-height: 2;
 }
 
 h1,
@@ -53,12 +53,9 @@ i {
   font-family: Georgia, serif;
 }
 
-p {
-  line-height: 2;
-}
-
 .centre {
-  padding: 80px 20px;
+  padding: 80px 20px 40px 20px;
+  margin: 0 auto;
 }
 
 .half {
@@ -100,11 +97,17 @@ p {
   margin: 0 2px;
 }
 
-.bg-grey {
-  background-color: #f7f7f7;
+@media screen and (min-width: 768px) {
+  .centre {
+    padding: 80px 60px 20px 60px;
+  }
+
+  .half {
+    padding: 40px 60px;
+  }
 }
 
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 1366px) {
   h1,
   h2 {
     font-size: 2rem;
@@ -117,7 +120,8 @@ p {
   }
 
   .centre {
-    padding: 10vh 20vw;
+    max-width: 960px;
+    padding-bottom: 80px;
   }
 
   .half {
@@ -126,7 +130,7 @@ p {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding-left: 80px;
+    padding: 0 0 0 80px;
   }
 
   .home-btn {
@@ -143,7 +147,7 @@ p {
 
   .subnav .btn {
     width: 100%;
-    border: #f7f7f7 solid 1px;
+    border: #fff solid 1px;
     border-bottom: #ccc solid 1px;
     padding: 10px;
   }

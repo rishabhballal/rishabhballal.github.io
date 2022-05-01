@@ -1,7 +1,7 @@
 class Manifold {
   constructor(id, dim=[0.5, 0.8]) {
     this.canvas = document.getElementById(`canvas-${id}`);
-    if (window.innerWidth > 768) {
+    if (window.innerWidth > breakpoint) {
       this.canvas.width = dim[0]*window.innerWidth;
       this.canvas.height = dim[1]*window.innerHeight;
     } else {

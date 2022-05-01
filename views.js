@@ -16,7 +16,7 @@ function renderPage(id) {
 if (window.location.hash) {
   renderPage(window.location.hash.slice(1));
 } else {
-  if (window.innerWidth > 768) {
+  if (window.innerWidth > breakpoint) {
     const canvas = document.getElementById('canvas-moebius1');
     canvas.remove();
     document.getElementById('main').appendChild(canvas);
@@ -34,7 +34,7 @@ let active = document.getElementById('active').value;
 const subnav = document.querySelectorAll('.subnav button');
 document.getElementById(active).classList.remove('hidden');
 subnav.forEach(btn => {
-  if (window.innerWidth < 768) return;
+  if (window.innerWidth < breakpoint) return;
   if (btn.value != active)
     document.getElementById(btn.value).classList.add('hidden');
   btn.addEventListener('click', e => {
