@@ -1,20 +1,25 @@
 class Manifold {
-  constructor(id, scale=[0.6, 0.45]) {
+  constructor(id) {
     this.canvas = document.getElementById(`canvas-${id}`);
-    console.log(window.innerWidth)
-    if (window.innerWidth > 768) {
-      this.canvas.width = scale[0]*window.innerWidth;
-      this.canvas.height = scale[1]*window.innerHeight;
-    } else {
-      this.canvas.width = window.innerWidth;
-      this.canvas.height = 0.6*window.innerWidth;
-    }
     this.ctx = this.canvas.getContext('2d');
-    this.ctx.translate(0.45*this.canvas.width, 0.6*this.canvas.height);
-    this.ctx.scale(1, -1);
+    if (window.innerWidth <= 768) {
+      this.canvas.width = window.innerWidth;
+      this.canvas.height = 0.45*window.innerWidth;
+      this.r = 0.26*this.canvas.width;
+      this.cam = 2.4*this.r;
+    } else if (window.innerWidth < 1366) {
+      this.canvas.width = 0.85*window.innerWidth;
+      this.canvas.height = 0.3*window.innerHeight;
+      this.r = 0.28*this.canvas.width;
+      this.cam = 2.8*this.r;
+    } else {
+      this.canvas.width = 0.6*window.innerWidth;
+      this.canvas.height = 0.45*window.innerHeight;
+      this.r = 0.24*this.canvas.width;
+      this.cam = 3.2*this.r;
+    }
+    this.ctx.translate(0.48*this.canvas.width, 0.48*this.canvas.height);
     this.q = [];
-    this.r = 0.24*this.canvas.width;
-    this.cam = 4*this.r;
   }
 
   rotate(axis, angle) {
