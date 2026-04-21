@@ -1,3 +1,4 @@
 https://rishabhballal.github.io
-https://rishabhballal.github.io/publications.html
-https://rishabhballal.github.io/notes.html
+https://rishabhballal.github.io/teaching.html
+https://rishabhballal.github.io/research.html
+https://rishabhballal.github.io/talks.html
