@@ -93,6 +93,10 @@ section.list {
   padding-bottom: 50px;
 }
 
+h2 {
+  text-align: center;
+}
+
 article {
   padding: 10px 20px;
   display: grid;
